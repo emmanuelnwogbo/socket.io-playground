@@ -10,14 +10,23 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 const port = process.env.PORT || 3000;
-const publicDirectoryPath = path.join(__dirname, '../public')
+const publicDirectoryPath = path.join(__dirname, '../public');
 
 app.use(express.static(publicDirectoryPath));
 
-io.on('connection', () => {
+let count = 0;
+
+io.on('connection', (socket) => {
   console.log('new websocket connection');
+
+  socket.on('increment', () => {
+    //console.log('increment');
+    count+=1;
+    //socket.emit('countUpdated', count);
+    io.emit('countUpdated', count);
+  })
 });
 
 server.listen(port, () => {
-    console.log(`Server is up on port ${port}!`)
+  console.log(`Server is up on port ${port}!`);
 });
