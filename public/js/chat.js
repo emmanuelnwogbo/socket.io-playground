@@ -1,4 +1,6 @@
-const socket = io()
+const socket = io();
+
+console.log(moment(new Date().getTime()).format('h:mm a'))
 
 socket.on('message', (message) => {
     console.log(message)
