@@ -13,7 +13,13 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
 
     const message = e.target.elements.message.value
 
-    socket.emit('sendMessage', message)
+    socket.emit('sendMessage', message, (profanity) => {
+      if (profanity) {
+        return console.log(profanity)
+      }
+
+      console.log('Message delivered!')
+    })
 });
 
 document.querySelector('#send-location').addEventListener('click', () => {
